@@ -1,31 +1,27 @@
 package com.jpmc.midascore.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class UserRecord {
 
     @Id
-    @GeneratedValue()
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
-    private float balance;
+    @Column(nullable = false, precision = 19, scale = 4)
+    private BigDecimal balance;
 
     protected UserRecord() {
     }
 
-    public UserRecord(String name, float balance) {
+    public UserRecord(String name, BigDecimal balance) {
         this.name = name;
         this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("User[id=%d, name='%s', balance='%f'", id, name, balance);
     }
 
     public Long getId() {
@@ -36,11 +32,11 @@ public class UserRecord {
         return name;
     }
 
-    public float getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }
